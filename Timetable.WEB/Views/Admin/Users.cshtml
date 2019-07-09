@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Список пользователей";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Список пользователей</h2>
+<div name="error"></div>
+@model UserViewModel
+
+    
+@*<form method="post" action="https://timetableweb.azurewebsites.net/api/UserAPI" name="userForm">*@
+<form method="post" action="https://localhost:44375/api/UserAPI" name="userForm">
+
+    <input type="hidden" name="id" value="0" />
+
+    <div class="form-group">
+        <label for="login">Login:</label>
+        <input type="text" class="form-control" asp-for="Login" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" asp-for="Password" />
+    </div>
+
+    <div class="form-group">
+        <label for="role">Role:</label>
+        @Html.DropDownListFor(w => w.Role, new SelectList(new string[] { "student", "professor" }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="group">Group:</label>
+        @Html.DropDownListFor(w => w.Group, new SelectList(new string[] { "ISIT-1", "ISIT-2", "ISIT-3", "POIT-4", "POIT-5", "POIT-6", "MOB-7", "MOB-8", "DEVI-9", "DEVI-10" }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="course">Course:</label>
+        @Html.DropDownListFor(w => w.Course, new SelectList(new int[] { 1, 2, 3, 4 }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="subgroup">Subgroup:</label>
+        @Html.DropDownListFor(w => w.Subgroup, new SelectList(new int[] { 1, 2 }), "")
+    </div>
+
+    <div class="panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+        <a id="reset" class="btn btn-sm btn-primary">Сбросить</a>
+    </div>
+</form>
+
+<table class="table table-condensed table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Group</th>
+            <th>Subgroup</th>
+            <th>Course</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="~/js/UserCRUD.js"></script>

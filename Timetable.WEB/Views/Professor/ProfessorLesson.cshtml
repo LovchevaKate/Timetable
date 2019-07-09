@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Lesson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lesson</h2>
+
+@model LessonViewModel
+@*<form method="post" action="https://timetableweb.azurewebsites.net/api/LessonAPI" name="lessonForm">*@
+<form method="post" action="https://localhost:44312/api/LessonAPI" name="lessonForm">
+
+
+    <input type="hidden" name="id" value="0" />
+
+    <div class="form-group">
+        <label for="IdAuditorium">Auditorium:</label>
+        @Html.DropDownListFor(w => w.Auditorium, ViewBag.Auditoriums as SelectList, "")
+    </div>
+
+    <div class="form-group">
+        <label for="IdSubject">Subject:</label>
+        @Html.DropDownListFor(w => w.Subject, ViewBag.Subjects as SelectList, "")
+    </div>
+
+    <div class="form-group">
+        <label for="IdCourse">Course:</label>
+        @Html.DropDownList("IdCourse", new SelectList(new int[] { 1, 2, 3, 4 }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="IdGroup">Group:</label>
+        @Html.DropDownListFor(x => x.Group, new SelectList(new string[] { "ISIT-1", "ISIT-2", "ISIT-3", "POIT-4", "POIT-5", "POIT-6", "MOB-7", "MOB-8", "DEVI-9", "DEVI-10" }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="IdSubgroup">Subgroup:</label>
+        @Html.DropDownListFor(w => w.Subgroup, new SelectList(new int[] { 1, 2 }), "")
+    </div>
+
+    <div class="form-group">
+        <label for="Day">Day:</label>
+        @Html.DropDownListFor(w => w.Day, Html.GetEnumSelectList(typeof(DayOfWeek)), "")
+    </div>
+
+    <div class="form-group">
+        <label for="Time">Time:</label>
+        @Html.DropDownListFor(w => w.Time, new SelectList(new string[] { "11:00", "12:00" }), "")
+    </div>
+
+    <div class="panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+    </div>
+
+</form>
+
+<table class="table table-condensed table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Auditorium</th>
+            <th>Type</th>
+            <th>Subject</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Course</th>
+            <th>Group</th>
+            <th>Subgroup</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="~/js/LessonCRUD.js"></script>
+

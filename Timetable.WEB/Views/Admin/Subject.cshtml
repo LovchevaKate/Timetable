@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SubjectViewModel
+
+<h2>Subject</h2>
+@*<form method="post" action="https://timetableweb.azurewebsites.net/api/SubjectAPI" name="subjectForm">*@
+<form method="post" action="https://localhost:44375/api/SubjectAPI" name="subjectForm">
+
+    <input type="hidden" name="id" value="0" />
+
+    <div class="form-group">
+        <label for="SubjectName">SubjectName:</label>
+        <input class="form-control" name="SubjectName" />
+    </div>
+    <div class="form-group">
+        <label for="IdProfessor">Professor:</label>
+        @Html.DropDownListFor(w => w.Professor, ViewBag.User as SelectList, "")
+    </div>
+
+    <div class="panel-body">
+        <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+        <a id="reset" class="btn btn-sm btn-primary">Сбросить</a>
+    </div>
+</form>
+
+<table class="table table-condensed table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>SubjectName</th>
+            <th>Professor</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="~/js/SubjectCRUD.js"></script>
+

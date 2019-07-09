@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Admin page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Student</h2>
+
+<br>
+<a asp-action="StudentExam">Экзамены</a>
+<br>
+<a asp-action="StudentMark">Marks</a>
+
+<br><br>
+
+<h4>Monday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Monday"></tbody>
+</table>
+
+<h4>Tuesday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Tuesday"></tbody>
+</table>
+
+<h4>Wednesday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Wednesday"></tbody>
+</table>
+
+<h4>Thursday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Thursday"></tbody>
+</table>
+
+<h4>Friday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Friday"></tbody>
+</table>
+
+<h4>Saturday</h4>
+<table class="table table-condensed table-striped table-bordered">
+    <tbody id="Saturday"></tbody>
+</table>
+
+<script>
+    // Получение всех пар
+    function GetLessons() {
+        $.ajax({
+            //url: 'https://timetableweb.azurewebsites.net/api/LessonAPI',
+            url: 'https://localhost:44375/api/LessonAPI',
+            type: 'GET',
+            contentType: "application/json",
+            success: function (lessons) {
+                var d1 = document.getElementById("Monday");
+                var d2 = document.getElementById("Tuesday");
+                var d3 = document.getElementById("Wednesday");
+                var d4 = document.getElementById("Thursday");
+                var d5 = document.getElementById("Friday");
+                var d6 = document.getElementById("Saturday");
+                var rows1 = "";
+                var rows2 = "";
+                var rows3 = "";
+                var rows4 = "";
+                var rows5 = "";
+                var rows6 = "";
+
+
+                lessons.forEach(lesson => {
+                    console.log(lesson.day);
+                    switch (lesson.day) {
+                        case 1:
+                            rows1 += row(lesson); break;
+                        //d1.innerHTML = "<p>"+ row(lesson)+ "</p>"; break;
+                        case 2:
+                            rows2 += row(lesson); break;
+                        //d2.innerHTML = row(lesson); break;
+                        case 3:
+                            rows3 += row(lesson); break;
+                        //d3.innerHTML = row(lesson); break;
+                        case 4:
+                            rows4 += row(lesson); break;
+                        //d4.innerHTML = row(lesson); break;
+                        case 5:
+                            rows5 += row(lesson); break;
+                        //d5.innerHTML = row(lesson); break;
+                        case 6:
+                            rows6 += row(lesson); break;
+                        //d6.innerHTML = row(lesson); break;
+                    }
+                });
+
+                $(d1).append(rows1);
+                $(d2).append(rows2);
+                $(d3).append(rows3);
+                $(d4).append(rows4);
+                $(d5).append(rows5);
+                $(d6).append(rows6);
+            }
+        });
+    }
+
+    var row = function (lesson) {
+        if (lesson.group == null) {
+            return "<tr><td>" + lesson.auditorium + "</td>" +
+                "<td>" + lesson.subject + "</td>" +
+                "<td>" + lesson.time + "</td>" +
+                "<td>" + lesson.course + "</td>" +
+                "<td>" + lesson.subgroup + "</td></tr>";
+        }
+
+        else {
+            return "<tr><td>" + lesson.auditorium + "</td>" +
+                "<td>" + lesson.subject + "</td>" +
+                "<td>" + lesson.time + "</td>" +
+                "<td>" + lesson.course + "</td>" +
+                "<td>" + lesson.group + "</td>" +
+                "<td>" + lesson.subgroup + "</td></tr>";
+        }
+    }
+
+    GetLessons();
+</script>

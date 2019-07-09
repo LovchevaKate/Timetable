@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Student mark";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Marks</h2>
+
+<br><br>
+
+
+@model MarkViewModel
+
+<form name="markForm">
+
+    <div class="form-group">
+        <label for="subject">Subject:</label>
+        @Html.DropDownListFor(x => x.Subject, ViewBag.Subjects as SelectList, "")
+    </div>
+
+    <input type="button" value="Find" onclick="GetMarks()" />
+</form>
+
+<br>
+
+<table class="table table-condensed table-striped table-bordered" id="marksTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Subject</th>
+            <th>Mark</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    // Получение всех оценок
+function GetMarks() {
+    let form = document.forms["markForm"];
+    let subjectform = form.elements["Subject"].value;
+
+    $.ajax({
+        //url: 'https://timetableweb.azurewebsites.net/api/MarkAPI',
+        url: 'https://localhost:44375/api/MarkAPI',
+        type: 'GET',
+        contentType: "application/json",
+        headers: {
+            subject: subjectform,
+        },
+        success: function (marks) {
+            let rows = "";
+            marks.forEach(mark => {
+                rows += row(mark);
+            });
+            $("table tbody").append(rows);
+        }
+    });
+}
+
+let row = function (mark) {
+    return "<tr data-rowid='" + mark.id + "'><td>" + mark.id + "    </td> " +
+        "<td><p class='tableSubject'>" + mark.subject + "</p></td>" +
+        "<td><p class='mark'>" + mark.value + "</p></td > ";
+}
+</script>
+
